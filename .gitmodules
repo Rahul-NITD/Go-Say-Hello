@@ -1,0 +1,3 @@
+[submodule "LifeAdvice"]
+	path = LifeAdvice
+	url = https://github.com/Rahul-NITD/Go-Say-Hello
