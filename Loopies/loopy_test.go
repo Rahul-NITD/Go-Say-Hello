@@ -28,3 +28,9 @@ func assertHelper(t testing.TB, got, want string) {
 		t.Errorf("got %q want %q", got, want)
 	}
 }
+
+func BenchmarkLoopy(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Loopy("a", 100)
+	}
+}
