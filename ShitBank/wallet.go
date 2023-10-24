@@ -5,6 +5,8 @@ import (
 	"fmt"
 )
 
+var InsufficientFundsError = errors.New("Insufficient ShitCoins, Withdraw Cancelled")
+
 // Our Bank only runs on ShitCoins
 type ShitCoin int
 
@@ -18,7 +20,7 @@ func (wallet *Wallet) Deposit(amt ShitCoin) {
 
 func (wallet *Wallet) Withdraw(amt ShitCoin) error {
 	if amt > wallet.balance {
-		return errors.New("Insufficient ShitCoins, Withdraw Cancelled")
+		return InsufficientFundsError
 	}
 	wallet.balance -= amt
 	return nil
