@@ -59,11 +59,11 @@ var assertNoError = func(t testing.TB, got error) {
 
 var assertError = func(t testing.TB, got, want error) {
 	t.Helper()
+	if got == nil && want != nil {
+		t.Fatal("Expected an error")
+	}
 	if got != want {
 		t.Errorf("Got '%q' want '%q'", got, want)
-	}
-	if got == nil {
-		t.Fatal("Expected an error")
 	}
 }
 
@@ -81,6 +81,15 @@ func TestUpdate(t *testing.T) {
 		upderr := dic.Update("Test", "This is Test")
 		assertError(t, upderr, ErrCannotUpdateNonExistingKey)
 		_, err := dic.Search("Test")
+		assertError(t, err, ErrSearchWordNotFound)
+	})
+}
+
+func TestDelete(t *testing.T) {
+	t.Run("test delete word", func(t *testing.T) {
+		dic := Dictionary{"Hello": "Greeting"}
+		dic.Delete("Hello")
+		_, err := dic.Search("Hello")
 		assertError(t, err, ErrSearchWordNotFound)
 	})
 }
