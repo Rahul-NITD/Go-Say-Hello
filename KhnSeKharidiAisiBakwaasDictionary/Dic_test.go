@@ -11,24 +11,35 @@ func TestDic(t *testing.T) {
 		}
 	}
 
+	assertNoError := func(t testing.TB, got error) {
+		t.Helper()
+		if got != nil {
+			t.Fatal("Did not expect an error here")
+		}
+	}
+
+	assertError := func(t testing.TB, got, want error) {
+		t.Helper()
+		if got != want {
+			t.Errorf("Got '%s' want '%s'", got.Error(), want.Error())
+		}
+		if got == nil {
+			t.Fatal("Expected an error")
+		}
+	}
+
 	t.Run("Test Dic", func(t *testing.T) {
 		dictionary := Dictionary{"Hello": "It is a greeting"}
 		got, err := dictionary.Search("Hello")
 		want := dictionary["Hello"]
-		if err != nil {
-			t.Fatal("Did not expect an error here")
-		}
+		assertNoError(t, err)
 		assertHelper(t, got, want)
 	})
 
 	t.Run("Unknown Error", func(t *testing.T) {
 		dic := Dictionary{"Hello": "Greeting"}
 		_, err := dic.Search("Test")
-		want := "search word not found in Dictionary"
-		if err == nil {
-			t.Fatal("Expected an Error here")
-		}
-		assertHelper(t, err.Error(), want)
+		assertError(t, err, ErrSearchWordNotFound)
 	})
 
 }
