@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogPost</title>
+</head>
+<body>
+
+<ol>
+    
+    <li><a href="/post/hello-world">Hello World</a></li>
+    
+    <li><a href="/post/hello-again">Hello Again</a></li>
+    
+</ol>
+
+<footer>
+    Hi there! Here are some social links worth clicking
+    <ul>
+        <li>
+            <a href="www.github.com/Rahul-NITD"></a>
+        </li>
+    </ul>
+</footer>
+</body>
+</html>

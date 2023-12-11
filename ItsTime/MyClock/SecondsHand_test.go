@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func TestSecondsHandTDD(t *testing.T) {
+func TestSecondsHand(t *testing.T) {
 	t.Run("UT1: Test Position in unit circle", func(t *testing.T) {
 		cases := []struct {
 			time  time.Time

@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	t := time.Date(1337, time.January, 1, 0, 0, 45, 0, time.UTC)
+	t := time.Now()
 	myclock.BuildSVG(os.Stdout, t)
 
 }
