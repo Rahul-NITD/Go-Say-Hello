@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogPost</title>
+</head>
+<body>
+
+<h1>Hello Rahul</h1>
+
+<p>This is some description</p>
+
+<p>Ooh lala</p>
+
+
+Tags: <ul>
+    
+    <li>TDD</li>
+    
+    <li>something else too</li>
+    
+</ul>
+
+<footer>
+    Hi there! Here are some social links worth clicking
+    <ul>
+        <li>
+            <a href="www.github.com/Rahul-NITD"></a>
+        </li>
+    </ul>
+</footer>
+</body>
+</html>
