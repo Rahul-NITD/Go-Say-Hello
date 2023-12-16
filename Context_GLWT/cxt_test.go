@@ -3,6 +3,7 @@ package contextglwt_test
 import (
 	contextglwt "GoSayHello/Context_GLWT"
 	"context"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -59,6 +60,24 @@ func AssertCancelled(t testing.TB, got, want bool) {
 	}
 }
 
+type SpyResponseRecorder struct {
+	written bool
+}
+
+func (s *SpyResponseRecorder) Write([]byte) (int, error) {
+	s.written = true
+	return 0, errors.New("TODO")
+}
+
+func (s *SpyResponseRecorder) WriteHeader(statusCode int) {
+	s.written = true
+}
+
+func (s *SpyResponseRecorder) Header() http.Header {
+	s.written = true
+	return nil
+}
+
 func TestServer(t *testing.T) {
 	t.Run("Run server to return data", func(t *testing.T) {
 		s := "This is the stub response"
@@ -81,9 +100,13 @@ func TestServer(t *testing.T) {
 		cancelContext, cancelfunc := context.WithCancel(req.Context())
 		req = req.WithContext(cancelContext)
 		time.AfterFunc(5*time.Millisecond, cancelfunc)
-		resp := httptest.NewRecorder()
+		resp := &SpyResponseRecorder{}
 
 		svr.ServeHTTP(resp, req)
+
+		if resp.written {
+			t.Error("kyu likh dia?")
+		}
 
 		AssertCancelled(t, str.cancelled, true)
 	})
