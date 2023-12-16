@@ -18,9 +18,33 @@ func (s *StubStore) Cancel() {
 	s.cancelled = true
 }
 
-func (s *StubStore) Fetch() string {
-	time.Sleep(100 * time.Millisecond)
-	return s.res
+func (s *StubStore) Fetch(cxt context.Context) (string, error) {
+	data := make(chan string, 1)
+
+	// mocking 10ms delay for each char
+	go func(cxt context.Context) {
+		var result string
+		for _, c := range s.res {
+			select {
+			case <-cxt.Done():
+				s.Cancel()
+				return
+			default:
+				time.Sleep(10 * time.Millisecond)
+				result += string(c)
+			}
+		}
+		data <- result
+	}(cxt)
+
+	select {
+	case <-cxt.Done():
+		s.Cancel()
+		return "", cxt.Err()
+	case res := <-data:
+		return res, nil
+	}
+
 }
 
 func AssertString(t testing.TB, got, want string) {
