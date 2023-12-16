@@ -23,6 +23,18 @@ func (s *StubStore) Fetch() string {
 	return s.res
 }
 
+func AssertString(t testing.TB, got, want string) {
+	if got != want {
+		t.Errorf("got %s != %s", got, want)
+	}
+}
+
+func AssertCancelled(t testing.TB, got, want bool) {
+	if got != want {
+		t.Errorf("got %t != %t", got, want)
+	}
+}
+
 func TestServer(t *testing.T) {
 	t.Run("Run server to return data", func(t *testing.T) {
 		s := "This is the stub response"
@@ -33,13 +45,8 @@ func TestServer(t *testing.T) {
 
 		svr.ServeHTTP(resp, req)
 
-		if resp.Body.String() != s {
-			t.Errorf("got %s != %s", resp.Body.String(), s)
-		}
-
-		if str.cancelled {
-			t.Error("Should not be cancelled")
-		}
+		AssertString(t, resp.Body.String(), s)
+		AssertCancelled(t, str.cancelled, false)
 
 	})
 
@@ -54,9 +61,7 @@ func TestServer(t *testing.T) {
 
 		svr.ServeHTTP(resp, req)
 
-		if !str.cancelled {
-			t.Error("request not cancelled")
-		}
+		AssertCancelled(t, str.cancelled, true)
 	})
 
 }
