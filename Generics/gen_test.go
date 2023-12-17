@@ -17,19 +17,21 @@ func TestAssertFunctions(t *testing.T) {
 	})
 
 	t.Run("Completely absurd", func(t *testing.T) {
-		AssertEqual(t, "0", 0) // we dont want this to run
+		// AssertEqual(t, "0", 0) // we dont want this to run when using interface{} no error was thrown. Using generics this would not compile
 	})
 
 }
 
-func AssertEqual(t testing.TB, got, want interface{}) {
+func AssertEqual[T comparable](t testing.TB, got, want T) {
+	t.Helper()
 	if got != want {
-		t.Errorf("got %d != %d", got, want)
+		t.Errorf("got %v != %v", got, want)
 	}
 }
 
-func AssertNotEqual(t testing.TB, got, want interface{}) {
+func AssertNotEqual[T comparable](t testing.TB, got, want T) {
+	t.Helper()
 	if got == want {
-		t.Errorf("got %d == %d", got, want)
+		t.Errorf("got %v == %v", got, want)
 	}
 }
