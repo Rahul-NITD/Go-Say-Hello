@@ -56,7 +56,7 @@ func TestSecondsHand(t *testing.T) {
 		}
 		for _, test := range cases {
 			t.Run(SmolTestName(test.time), func(t *testing.T) {
-				got := myclock.SecondsHand(test.time)
+				got := myclock.SecondsHand(nil, test.time)
 				want := test.point
 				assertPoint(t, got, want)
 			})
