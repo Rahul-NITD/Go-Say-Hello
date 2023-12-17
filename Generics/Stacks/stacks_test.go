@@ -34,3 +34,26 @@ func TestStack(t *testing.T) {
 		AssertEqual(t, st.IsEmpty(), true)
 	})
 }
+
+func TestStackBetter(t *testing.T) {
+	t.Run("For Integers", func(t *testing.T) {
+		st := new(stacks.Stack[int])
+		AssertEqual(t, st.IsEmpty(), true)
+		st.Push(5)
+		AssertEqual(t, st.IsEmpty(), false)
+		val, err := st.Pop()
+		AssertEqual(t, val, 5)
+		AssertEqual(t, err, nil)
+		AssertEqual(t, st.IsEmpty(), true)
+	})
+	t.Run("For Strings", func(t *testing.T) {
+		st := new(stacks.Stack[string])
+		AssertEqual(t, st.IsEmpty(), true)
+		st.Push("Hi")
+		AssertEqual(t, st.IsEmpty(), false)
+		val, err := st.Pop()
+		AssertEqual(t, val, "Hi")
+		AssertEqual(t, err, nil)
+		AssertEqual(t, st.IsEmpty(), true)
+	})
+}

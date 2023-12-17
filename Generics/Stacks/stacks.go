@@ -47,3 +47,28 @@ func (s *StackOfStr) Pop() (string, error) {
 	return val, nil
 
 }
+
+// **********Better Code************
+
+type Stack[T any] struct {
+	values []T
+}
+
+func (s *Stack[T]) IsEmpty() bool {
+	return len(s.values) == 0
+}
+
+func (s *Stack[T]) Push(val T) {
+	s.values = append(s.values, val)
+}
+
+func (s *Stack[T]) Pop() (T, error) {
+	if s.IsEmpty() {
+		var zero T
+		return zero, errors.New("Stack Empty")
+	}
+	idx := len(s.values) - 1
+	val := s.values[len(s.values)-1]
+	s.values = s.values[:idx]
+	return val, nil
+}
