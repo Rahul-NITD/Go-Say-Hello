@@ -50,33 +50,41 @@ func TestReduce(t *testing.T) {
 		}
 
 		t.Run("Sum All Apples", func(t *testing.T) {
-			res := reducefn.Reduce[AppleBasket](
+			res := reducefn.Reduce[AppleBasket, int](
 				applesBaskets,
-				func(ab1, ab2 AppleBasket) AppleBasket {
-					return AppleBasket{
-						ab1.apples + ab2.apples,
-						ab1.polished || ab2.polished,
-					}
+				func(valTillNow int, Curr AppleBasket) int {
+					return valTillNow + Curr.apples
 				},
-				AppleBasket{0, false},
+				0,
 			)
-			AssertEqual[AppleBasket](t, res, AppleBasket{17, true})
+			AssertEqual[int](t, res, 17)
 		})
 
 		t.Run("Sum only polished Apples", func(t *testing.T) {
-			res := reducefn.Reduce[AppleBasket](
+			// res := reducefn.Reduce[AppleBasket](
+			// 	applesBaskets,
+			// 	func(ab1, ab2 AppleBasket) AppleBasket {
+			// 		if !ab2.polished {
+			// 			return ab1
+			// 		}
+			// 		return AppleBasket{
+			// 			ab1.apples + ab2.apples,
+			// 			true,
+			// 		}
+			// 	}, AppleBasket{0, true},
+			// )
+			// Now we can do this instead
+			res := reducefn.Reduce[AppleBasket, int](
 				applesBaskets,
-				func(ab1, ab2 AppleBasket) AppleBasket {
-					if !ab2.polished {
-						return ab1
+				func(valTillNow int, curr AppleBasket) int {
+					if curr.polished {
+						return valTillNow + curr.apples
 					}
-					return AppleBasket{
-						ab1.apples + ab2.apples,
-						true,
-					}
-				}, AppleBasket{0, true},
+					return valTillNow
+				},
+				0,
 			)
-			AssertEqual[AppleBasket](t, res, AppleBasket{13, true})
+			AssertEqual[int](t, res, 13)
 		})
 	})
 }

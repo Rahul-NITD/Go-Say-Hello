@@ -23,7 +23,7 @@ func SumAllTails(numbersToSum ...[]int) []int {
 // Again use generics to DRY up our code
 // create a reduce function
 
-func Reduce[T, V any](coll []T, accum func(V, T) V, initVal V) V {
+func Reduce[T, V any](coll []T, accum func(valTillNow V, curr T) V, initVal V) V {
 	res := initVal
 	for _, val := range coll {
 		res = accum(res, val)
