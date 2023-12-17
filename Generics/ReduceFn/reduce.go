@@ -4,11 +4,9 @@ package reducefn
 
 // Sum calculates the total from a slice of numbers.
 func Sum(numbers []int) int {
-	var sum int
-	for _, number := range numbers {
-		sum += number
-	}
-	return sum
+	return Reduce[int](numbers, func(i1, i2 int) int {
+		return i1 + i2
+	})
 }
 
 // SumAllTails calculates the sums of all but the first number given a collection of slices.
@@ -24,4 +22,15 @@ func SumAllTails(numbersToSum ...[]int) []int {
 	}
 
 	return sums
+}
+
+// Again use generics to DRY up our code
+// create a reduce function
+
+func Reduce[T any](coll []T, accum func(T, T) T) T {
+	var res T
+	for _, val := range coll {
+		res = accum(res, val)
+	}
+	return res
 }
