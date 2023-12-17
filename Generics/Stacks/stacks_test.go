@@ -23,4 +23,14 @@ func TestStack(t *testing.T) {
 		AssertEqual(t, err, nil)
 		AssertEqual(t, st.IsEmpty(), true)
 	})
+	t.Run("For Strings", func(t *testing.T) {
+		st := new(stacks.StackOfStr)
+		AssertEqual(t, st.IsEmpty(), true)
+		st.Push("Hi")
+		AssertEqual(t, st.IsEmpty(), false)
+		val, err := st.Pop()
+		AssertEqual(t, val, "Hi")
+		AssertEqual(t, err, nil)
+		AssertEqual(t, st.IsEmpty(), true)
+	})
 }

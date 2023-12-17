@@ -24,3 +24,26 @@ func (s *StackOfInt) Pop() (int, error) {
 	return val, nil
 
 }
+
+type StackOfStr struct {
+	values []string
+}
+
+func (s *StackOfStr) IsEmpty() bool {
+	return len(s.values) == 0
+}
+
+func (s *StackOfStr) Push(x string) {
+	s.values = append(s.values, x)
+}
+
+func (s *StackOfStr) Pop() (string, error) {
+	if s.IsEmpty() {
+		return "", errors.New("stack is empty")
+	}
+	idx := len(s.values) - 1
+	val := s.values[idx]
+	s.values = s.values[:idx]
+	return val, nil
+
+}
