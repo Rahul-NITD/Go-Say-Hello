@@ -4,24 +4,20 @@ package reducefn
 
 // Sum calculates the total from a slice of numbers.
 func Sum(numbers []int) int {
-	return Reduce[int](numbers, func(i1, i2 int) int {
-		return i1 + i2
+	return Reduce[int](numbers, func(acc, i2 int) int {
+		return acc + i2
 	})
 }
 
 // SumAllTails calculates the sums of all but the first number given a collection of slices.
 func SumAllTails(numbersToSum ...[]int) []int {
-	var sums []int
-	for _, numbers := range numbersToSum {
-		if len(numbers) == 0 {
-			sums = append(sums, 0)
+	return Reduce[[]int](numbersToSum, func(acc, i2 []int) []int {
+		if len(i2) == 0 {
+			return append(acc, 0)
 		} else {
-			tail := numbers[1:]
-			sums = append(sums, Sum(tail))
+			return append(acc, Sum(i2[1:]))
 		}
-	}
-
-	return sums
+	})
 }
 
 // Again use generics to DRY up our code
