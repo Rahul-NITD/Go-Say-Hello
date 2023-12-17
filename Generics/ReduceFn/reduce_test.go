@@ -16,3 +16,67 @@ func TestSum(t *testing.T) {
 	AssertEqual(t, reducefn.Sum([]int{1, 2, 3, 4, 5}), 15)
 	AssertEqual(t, reducefn.SumAllTails([]int{1, 2, 3, 4, 5})[0], 14)
 }
+
+func TestReduce(t *testing.T) {
+	t.Run("Multiply Elements", func(t *testing.T) {
+		AssertEqual[int](t, reducefn.Reduce[int](
+			[]int{1, 2, 3, 5}, func(i1, i2 int) int {
+				return i1 * i2
+			},
+			1,
+		), 30)
+	})
+	t.Run("Concat Strongs using Reduce", func(t *testing.T) {
+		res := reducefn.Reduce[string](
+			[]string{"1", "2", "3"},
+			func(s1, s2 string) string {
+				return s1 + s2
+			}, "",
+		)
+		AssertEqual[string](t, res, "123")
+	})
+
+	t.Run("Reduce Structs", func(t *testing.T) {
+
+		type AppleBasket struct {
+			apples   int
+			polished bool
+		}
+
+		applesBaskets := []AppleBasket{
+			{5, true},
+			{4, false},
+			{8, true},
+		}
+
+		t.Run("Sum All Apples", func(t *testing.T) {
+			res := reducefn.Reduce[AppleBasket](
+				applesBaskets,
+				func(ab1, ab2 AppleBasket) AppleBasket {
+					return AppleBasket{
+						ab1.apples + ab2.apples,
+						ab1.polished || ab2.polished,
+					}
+				},
+				AppleBasket{0, false},
+			)
+			AssertEqual[AppleBasket](t, res, AppleBasket{17, true})
+		})
+
+		t.Run("Sum only polished Apples", func(t *testing.T) {
+			res := reducefn.Reduce[AppleBasket](
+				applesBaskets,
+				func(ab1, ab2 AppleBasket) AppleBasket {
+					if !ab2.polished {
+						return ab1
+					}
+					return AppleBasket{
+						ab1.apples + ab2.apples,
+						true,
+					}
+				}, AppleBasket{0, true},
+			)
+			AssertEqual[AppleBasket](t, res, AppleBasket{13, true})
+		})
+	})
+}
