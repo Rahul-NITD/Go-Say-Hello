@@ -30,3 +30,13 @@ func Reduce[T, V any](coll []T, accum func(valTillNow V, curr T) V, initVal V) V
 	}
 	return res
 }
+
+func Find[T any](coll []T, compareFunc func(T) bool) (value T, found bool) {
+	for _, ele := range coll {
+		if compareFunc(ele) {
+			return ele, true
+		}
+	}
+	var zero T
+	return zero, false
+}

@@ -88,3 +88,17 @@ func TestReduce(t *testing.T) {
 		})
 	})
 }
+
+func TestFind(t *testing.T) {
+	t.Run("Find first Even number", func(t *testing.T) {
+		numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+		firstEven, found := reducefn.Find[int](
+			numbers,
+			func(i int) bool {
+				return i%2 == 0
+			},
+		)
+		AssertEqual[int](t, firstEven, 2)
+		AssertEqual[bool](t, found, true)
+	})
+}
