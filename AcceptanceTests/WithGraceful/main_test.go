@@ -1,10 +1,10 @@
-package acceptancetests_test
+package main_test
 
 import (
+	acceptancetests "GoSayHello/AcceptanceTests"
 	"testing"
 	"time"
 
-	"github.com/quii/go-graceful-shutdown/acceptancetests"
 	"github.com/quii/go-graceful-shutdown/assert"
 )
 
@@ -13,7 +13,7 @@ const (
 	url  = "http://localhost:" + port
 )
 
-func TestAcceptance(t *testing.T) {
+func TestGracefulShutdown(t *testing.T) {
 	cleanup, sendInterrupt, err := acceptancetests.LaunchTestProgram(port)
 	if err != nil {
 		t.Fatal(err)
