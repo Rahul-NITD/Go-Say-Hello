@@ -41,7 +41,7 @@ func LaunchTestProgram(port string) (cleanup func(), sendInterrupt func() error,
 func buildBinary() (string, error) {
 	binName := randomString(10) + "-" + baseBinName
 
-	build := exec.Command("go", "build", "-o", binName)
+	build := exec.Command("go", "build", "-o", binName) // we are actually building the binary of our main function.
 
 	if err := build.Run(); err != nil {
 		return "", fmt.Errorf("cannot build tool %s: %s", binName, err)
@@ -57,7 +57,7 @@ func runServer(binName string, port string) (sendInterrupt func() error, kill fu
 
 	cmdPath := filepath.Join(dir, binName)
 
-	cmd := exec.Command(cmdPath)
+	cmd := exec.Command(cmdPath) // we are actually calling our binary to open up the server
 
 	if err := cmd.Start(); err != nil {
 		return nil, nil, fmt.Errorf("cannot run temp converter: %s", err)
@@ -68,7 +68,7 @@ func runServer(binName string, port string) (sendInterrupt func() error, kill fu
 	}
 
 	sendInterrupt = func() error {
-		return cmd.Process.Signal(syscall.SIGTERM)
+		return cmd.Process.Signal(syscall.SIGTERM) // Calling sigterm to terminate but we want gracefully.
 	}
 
 	err = waitForServerListening(port)
