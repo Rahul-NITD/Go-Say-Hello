@@ -4,6 +4,7 @@ TDD based GoLang learning based on the book [Learn Go with Tests](https://quii.g
 Follow my journey at [My Blog](https://rahul-goel-blog.vercel.app/)
 
 Here are the chapters. 
+### Go Fundamentals
 * [Hello World](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/01_Hello_World), because new language.
 * [Integers](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/02_Integers), because essential.
 * [Iteration](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/03_Iteration), because arthritis.
@@ -17,6 +18,21 @@ Here are the chapters.
 * [Select](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/11_Select), because racing. <!-- TODO -->
 * [Reflection](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/12_Reflection), because necessary evil. <!-- TODO -->
 * [Sync](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/13_Sync), because resource locks.
-* [Context](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/14_Context), because 
+* [Context](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/14_Context), because cancellation.
+* [Intro to property based tests](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/15_Property_Based_Testing), because domain.
+* [Maths](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/16_Maths), because reality. <!-- TODO -->
+* [Reading files](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/17_18_Reading_Files_Templating), because IO.
+* [Templating](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/17_18_Reading_Files_Templating), because HTML.
+* [Generics](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/19_20_Generics_HOF), because DRY.
+* [Revisiting arrays and slices with generics](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/19_20_Generics_HOF), because HOF.
+
+### Testing Fundamentals
+* [Introduction to acceptance tests](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/21_AcceptanceTests), because black box testing. <!-- TODO -->
+* [Scaling acceptance tests](TODO), because TODO.
+* [Working without mocks](TODO), because TODO.
+* [Refactoring Checklist](TODO), because TODO.
+
+### Build An Application
+* [Build An Application](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/24_Build_An_Application), because cool. <!-- TODO -->
 
 I thank everyone who supported me in this journey.
