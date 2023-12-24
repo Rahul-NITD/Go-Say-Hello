@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Rahul-NITD/scalingacceptancetests"
+	"github.com/Rahul-NITD/scalingacceptancetests/adapters/httpserver"
 	"github.com/Rahul-NITD/scalingacceptancetests/specs"
 	"github.com/alecthomas/assert/v2"
 	"github.com/testcontainers/testcontainers-go"
@@ -41,6 +41,6 @@ func TestGreeterServer(t *testing.T) {
 	assert.NoError(t, err)
 
 	// Use the host port to set the BaseURL
-	driver := scalingacceptancetests.Driver{BaseURL: "http://localhost:" + port.Port(), Client: &http.Client{Timeout: 1 * time.Second}}
+	driver := httpserver.Driver{BaseURL: "http://localhost:" + port.Port(), Client: &http.Client{Timeout: 1 * time.Second}}
 	specs.GreeterSpecification(t, driver)
 }
