@@ -1,8 +1,8 @@
 package main
 
 import (
-	blogposts "GoSayHello/BlogPosts"
-	blogrenderer "GoSayHello/BlogPosts/BlogRenderer"
+	blogposts "GoSayHello/17_18_Reading_Files_Templating"
+	blogrenderer "GoSayHello/17_18_Reading_Files_Templating/BlogRenderer"
 	"log"
 	"os"
 )

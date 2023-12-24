@@ -1,7 +1,7 @@
 package blogposts_test
 
 import (
-	blogposts "GoSayHello/BlogPosts"
+	blogposts "GoSayHello/17_18_Reading_Files_Templating"
 	"errors"
 	"io/fs"
 	"reflect"

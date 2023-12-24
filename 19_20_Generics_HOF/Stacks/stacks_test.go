@@ -1,7 +1,7 @@
 package stacks_test
 
 import (
-	stacks "GoSayHello/Generics/Stacks"
+	stacks "GoSayHello/19_20_Generics_HOF/Stacks"
 	"testing"
 )
 

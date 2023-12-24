@@ -1,7 +1,7 @@
 package blogrenderer
 
 import (
-	blogposts "GoSayHello/BlogPosts"
+	blogposts "GoSayHello/17_18_Reading_Files_Templating"
 	"embed"
 	"html/template"
 	"io"

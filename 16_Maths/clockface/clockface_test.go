@@ -1,7 +1,7 @@
 package clockface_test
 
 import (
-	"GoSayHello/clock/clockface"
+	"GoSayHello/16_Maths/clockface"
 	"bytes"
 	"encoding/xml"
 	"math"

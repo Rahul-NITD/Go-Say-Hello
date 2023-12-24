@@ -1,7 +1,7 @@
 package reducefn_test
 
 import (
-	reducefn "GoSayHello/Generics/ReduceFn"
+	reducefn "GoSayHello/19_20_Generics_HOF/ReduceFn"
 	"testing"
 )
 

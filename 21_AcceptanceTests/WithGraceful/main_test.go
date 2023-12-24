@@ -1,7 +1,7 @@
 package main_test
 
 import (
-	acceptancetests "GoSayHello/AcceptanceTests"
+	acceptancetests "GoSayHello/21_AcceptanceTests"
 	"testing"
 	"time"
 

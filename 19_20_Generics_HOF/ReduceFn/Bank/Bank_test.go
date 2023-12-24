@@ -1,7 +1,7 @@
 package bank_test
 
 import (
-	bank "GoSayHello/Generics/ReduceFn/Bank"
+	bank "GoSayHello/19_20_Generics_HOF/ReduceFn/Bank"
 	"testing"
 )
 

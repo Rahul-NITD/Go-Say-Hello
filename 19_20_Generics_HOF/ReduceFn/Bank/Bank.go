@@ -1,6 +1,6 @@
 package bank
 
-import reducefn "GoSayHello/Generics/ReduceFn"
+import reducefn "GoSayHello/19_20_Generics_HOF/ReduceFn"
 
 type Transaction struct {
 	From string

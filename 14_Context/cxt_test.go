@@ -1,7 +1,7 @@
 package contextglwt_test
 
 import (
-	contextglwt "GoSayHello/Context_GLWT"
+	contextglwt "GoSayHello/14_Context"
 	"context"
 	"errors"
 	"net/http"
