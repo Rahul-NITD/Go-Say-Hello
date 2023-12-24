@@ -13,7 +13,7 @@ import (
 func TestGreeterServer(t *testing.T) {
 	var (
 		port           = "8080"
-		DockerFilePath = "./cmd/httpserver/Dockerfile"
+		DockerFilePath = "./Dockerfile"
 		baseURL        = "http://localhost:" + port
 		driver         = httpserver.Driver{BaseURL: baseURL, Client: &http.Client{Timeout: 1 * time.Second}}
 	)
