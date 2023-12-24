@@ -10,7 +10,7 @@ type Driver struct {
 }
 
 func (d Driver) Greet() (string, error) {
-	res, err := http.Get(d.BaseURL + "/greet")
+	res, err := http.Get(d.BaseURL)
 	if err != nil {
 		return "", err
 	}

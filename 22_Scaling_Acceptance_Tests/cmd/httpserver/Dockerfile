@@ -1,14 +1,7 @@
-FROM golang:1.18-alpine as builder
-
+FROM golang:1.21.4-alpine
 WORKDIR /app
-
-COPY go.mod ./
-
-RUN go mod download
-
-COPY . .
-
-RUN go build -o svr cmd/httpserver/*.go
-
+COPY  . .
+RUN go mod tidy
+RUN go build -o svr cmd/httpserver/main.go
 EXPOSE 8080
 CMD [ "./svr" ]
