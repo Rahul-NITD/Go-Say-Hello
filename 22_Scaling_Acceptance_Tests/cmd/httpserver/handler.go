@@ -3,8 +3,11 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/Rahul-NITD/scalingacceptancetests"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Hello World")
+	name := r.URL.Query().Get("name")
+	fmt.Fprint(w, scalingacceptancetests.Greet(name))
 }
