@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Rahul-NITD/scalingacceptancetests"
+	scalingacceptancetests "github.com/Rahul-NITD/scalingacceptancetests/domain/interactions"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {

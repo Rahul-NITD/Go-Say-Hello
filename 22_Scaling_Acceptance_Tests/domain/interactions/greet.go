@@ -1,4 +1,4 @@
-package scalingacceptancetests
+package interactions
 
 import "fmt"
 
