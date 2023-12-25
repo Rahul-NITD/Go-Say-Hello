@@ -3,18 +3,27 @@ package httpserver
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
 	scalingacceptancetests "github.com/Rahul-NITD/scalingacceptancetests/domain/interactions"
 )
 
-func Handler(w http.ResponseWriter, r *http.Request) {
-	name := r.URL.Query().Get("name")
-	switch {
-	case strings.Contains(r.URL.Path, "/curse"):
-		fmt.Fprint(w, scalingacceptancetests.Curse(name))
-	default:
+func NewHandler() http.Handler {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/greet", GreetResponse())
+	mux.HandleFunc("/curse", CurseResponse())
+	return mux
+}
+
+func GreetResponse() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		name := r.URL.Query().Get("name")
 		fmt.Fprint(w, scalingacceptancetests.Greet(name))
 	}
+}
 
+func CurseResponse() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		name := r.URL.Query().Get("name")
+		fmt.Fprint(w, scalingacceptancetests.Curse(name))
+	}
 }
