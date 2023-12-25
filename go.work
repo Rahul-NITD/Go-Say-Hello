@@ -3,4 +3,5 @@ go 1.21.4
 use (
 	.
 	./22_Scaling_Acceptance_Tests
+	./24_Poker_Go
 )
