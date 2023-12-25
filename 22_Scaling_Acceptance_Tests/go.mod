@@ -4,6 +4,7 @@ go 1.21.4
 
 require (
 	github.com/alecthomas/assert/v2 v2.4.1
+	github.com/docker/go-connections v0.4.0
 	github.com/testcontainers/testcontainers-go v0.27.0
 )
 
@@ -19,7 +20,6 @@ require (
 	github.com/cpuguy83/dockercfg v0.3.1 // indirect
 	github.com/docker/distribution v2.8.2+incompatible // indirect
 	github.com/docker/docker v24.0.7+incompatible // indirect
-	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
