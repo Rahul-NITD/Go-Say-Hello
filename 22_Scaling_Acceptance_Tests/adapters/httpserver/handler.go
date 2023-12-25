@@ -9,21 +9,14 @@ import (
 
 func NewHandler() http.Handler {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/greet", GreetResponse())
-	mux.HandleFunc("/curse", CurseResponse())
+	mux.HandleFunc("/greet", Response(scalingacceptancetests.Greet))
+	mux.HandleFunc("/curse", Response(scalingacceptancetests.Curse))
 	return mux
 }
 
-func GreetResponse() http.HandlerFunc {
+func Response(f func(string) string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		name := r.URL.Query().Get("name")
-		fmt.Fprint(w, scalingacceptancetests.Greet(name))
-	}
-}
-
-func CurseResponse() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		name := r.URL.Query().Get("name")
-		fmt.Fprint(w, scalingacceptancetests.Curse(name))
+		fmt.Fprint(w, f(name))
 	}
 }
