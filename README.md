@@ -30,9 +30,9 @@ Here are the chapters.
 * [Introduction to acceptance tests](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/21_AcceptanceTests), because black box testing. <!-- TODO -->
 * [Scaling acceptance tests](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/22_Scaling_Acceptance_Tests), because Dockerize.
 * [Working without mocks](), because Fakes.
-* [Refactoring Checklist](), because TODO.
+* [Refactoring Checklist](), because Better Design.
 
 ### Build An Application
-* [Build An Application](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/24_Build_An_Application), because cool. <!-- TODO -->
+* [Build An Application](), because cool. <!-- TODO -->
 
 I thank everyone who supported me in this journey.
