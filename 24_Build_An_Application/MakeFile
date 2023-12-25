@@ -1,0 +1,4 @@
+do:
+	sh setup.sh
+	go test
+	docker stop pg-container
