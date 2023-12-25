@@ -18,5 +18,5 @@ func TestGreeterServer(t *testing.T) {
 	)
 
 	adapters.StartDockerServer(t, port, dockerFilePath)
-	specs.GreeterSpecification(t, driver)
+	specs.GreeterSpecification(t, &driver)
 }
