@@ -29,8 +29,8 @@ Here are the chapters.
 ### Testing Fundamentals
 * [Introduction to acceptance tests](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/21_AcceptanceTests), because black box testing. <!-- TODO -->
 * [Scaling acceptance tests](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/22_Scaling_Acceptance_Tests), because Dockerize.
-* [Working without mocks](TODO), because TODO.
-* [Refactoring Checklist](TODO), because TODO.
+* [Working without mocks](), because Fakes.
+* [Refactoring Checklist](), because TODO.
 
 ### Build An Application
 * [Build An Application](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/24_Build_An_Application), because cool. <!-- TODO -->
