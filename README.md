@@ -28,7 +28,7 @@ Here are the chapters.
 
 ### Testing Fundamentals
 * [Introduction to acceptance tests](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/21_AcceptanceTests), because black box testing. <!-- TODO -->
-* [Scaling acceptance tests](TODO), because TODO.
+* [Scaling acceptance tests](https://github.com/Rahul-NITD/Go-Say-Hello/tree/main/22_Scaling_Acceptance_Tests), because Dockerize.
 * [Working without mocks](TODO), because TODO.
 * [Refactoring Checklist](TODO), because TODO.
 
