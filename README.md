@@ -33,6 +33,6 @@ Here are the chapters.
 * [Refactoring Checklist](), because Better Design.
 
 ### Build An Application
-* [Build An Application](TODO), because cool. <!-- TODO -->
+* [Build An Application](24_Poker_Go), because cool. <!-- TODO -->
 
 I thank everyone who supported me in this journey.
