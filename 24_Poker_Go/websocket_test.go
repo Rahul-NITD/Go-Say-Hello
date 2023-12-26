@@ -11,7 +11,8 @@ import (
 )
 
 func TestWebsocket(t *testing.T) {
-	t.Run("receive winner over websocket", func(t *testing.T) {
+	t.Run("receive winner over websocket, accept blind messages", func(t *testing.T) {
+		// wantedBlindAlert := "Blind is 100"
 		store := NewSTUBStorage()
 		winner := "Rahul"
 		game := poker.NewTexasHoldem(&SpyAlerter{}, &store)
@@ -24,9 +25,24 @@ func TestWebsocket(t *testing.T) {
 
 		WriteMessageWS(t, conn, "3")
 		WriteMessageWS(t, conn, winner)
-		time.Sleep(10 * time.Millisecond)
-		assertPlayerWin(t, &store, "Rahul", 3)
+		done := retryUntil(500*time.Millisecond, func() bool {
+			got, _ := store.GetScore(winner)
+			return got == 3
+		})
+		if !done {
+			t.Error("Score not updated")
+		}
 	})
+}
+
+func retryUntil(d time.Duration, f func() bool) bool {
+	deadline := time.Now().Add(d)
+	for time.Now().Before(deadline) {
+		if f() {
+			return true
+		}
+	}
+	return false
 }
 
 func DialWS(t testing.TB, server *httptest.Server) *websocket.Conn {

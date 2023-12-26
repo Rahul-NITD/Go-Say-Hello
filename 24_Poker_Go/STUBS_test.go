@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"reflect"
 	"sort"
+	"sync"
 	"testing"
 	"time"
 
@@ -69,10 +70,13 @@ func CreatePostRequest(path string) (*httptest.ResponseRecorder, *http.Request) 
 // STUBStorage
 type STUBStorage struct {
 	Scores map[string]int
+	mutex  sync.Mutex
 }
 
 func (str *STUBStorage) GetScore(player string) (int, error) {
+	str.mutex.Lock()
 	score, ok := str.Scores[player]
+	str.mutex.Unlock()
 	if !ok {
 		return 0, poker.ERRORPlayerNotFound
 	}
@@ -80,7 +84,9 @@ func (str *STUBStorage) GetScore(player string) (int, error) {
 }
 
 func (str *STUBStorage) RecordWin(player string) error {
+	str.mutex.Lock()
 	str.Scores[player]++
+	str.mutex.Unlock()
 	return nil
 }
 
@@ -107,6 +113,7 @@ func NewSTUBStorage() STUBStorage {
 			"Akku":  3,
 			"dev":   1,
 		},
+		mutex: sync.Mutex{},
 	}
 }
 
