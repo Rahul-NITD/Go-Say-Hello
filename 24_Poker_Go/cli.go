@@ -18,6 +18,7 @@ type CLI struct {
 const (
 	NumberOfPlayersText = "Enter Number of Players : "
 	CannotConvertText   = "Could not convert to integer. Run again"
+	IncorrectInputText  = "Incorrect input."
 )
 
 func (c *CLI) PlayPoker() {
@@ -38,6 +39,9 @@ func (c *CLI) PlayPoker() {
 	c.game.Start(players)
 
 	c.inp.Scan()
+	if !strings.Contains(c.inp.Text(), "wins") {
+		fmt.Fprint(c.out, IncorrectInputText)
+	}
 	c.game.Finish(strings.Replace(c.inp.Text(), " wins", "", 1))
 }
 

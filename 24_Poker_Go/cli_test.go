@@ -27,7 +27,7 @@ func TestCLI(t *testing.T) {
 	})
 
 	t.Run("Test it prompts for number of users", func(t *testing.T) {
-		inp := strings.NewReader("7\n")
+		inp := strings.NewReader("7\nChris wins\n")
 		out := &bytes.Buffer{}
 		store := NewSTUBStorage()
 		alerter := SpyAlerter{}
@@ -58,6 +58,23 @@ func TestCLI(t *testing.T) {
 
 		got := out.String()
 		want := poker.NumberOfPlayersText + poker.CannotConvertText
+
+		if got != want {
+			t.Errorf("got %q != %q", got, want)
+		}
+
+	})
+
+	t.Run("Test Game stops when invalid input given", func(t *testing.T) {
+		out := &bytes.Buffer{}
+		in := strings.NewReader("5\nThis game is good!")
+		game := &GameSpy{}
+
+		cli := poker.NewCLI(in, out, game)
+		cli.PlayPoker()
+
+		got := out.String()
+		want := poker.NumberOfPlayersText + poker.IncorrectInputText
 
 		if got != want {
 			t.Errorf("got %q != %q", got, want)
