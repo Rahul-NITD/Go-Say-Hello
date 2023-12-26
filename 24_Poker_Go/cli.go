@@ -4,22 +4,33 @@ import (
 	"bufio"
 	"io"
 	"strings"
+	"time"
 )
 
 type CLI struct {
-	Store PokerStorage
-	Inp   io.Reader
+	store   PokerStorage
+	inp     io.Reader
+	alerter BlindAlerter
 }
 
 func (c *CLI) PlayPoker() {
-	reader := bufio.NewScanner(c.Inp)
+	if c.alerter != nil {
+		blinds := []int{100, 200, 300, 400, 500, 600, 800, 1000, 2000, 4000, 8000}
+		blindTime := 0 * time.Second
+		for _, blind := range blinds {
+			c.alerter.ScheduleAlertAfter(blindTime, blind)
+			blindTime = blindTime + 10*time.Minute
+		}
+	}
+	reader := bufio.NewScanner(c.inp)
 	reader.Scan()
-	c.Store.RecordWin(strings.Replace(reader.Text(), " wins", "", 1))
+	c.store.RecordWin(strings.Replace(reader.Text(), " wins", "", 1))
 }
 
-func NewCLI(store PokerStorage, inp io.Reader) *CLI {
+func NewCLI(store PokerStorage, inp io.Reader, alerter BlindAlerter) *CLI {
 	return &CLI{
-		Store: store,
-		Inp:   inp,
+		store:   store,
+		inp:     inp,
+		alerter: alerter,
 	}
 }

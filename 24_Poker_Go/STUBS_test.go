@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"sort"
 	"testing"
+	"time"
 
 	poker "github.com/Rahul-NITD/Poker"
 )
@@ -106,4 +107,20 @@ func NewSTUBStorage() STUBStorage {
 			"dev":   1,
 		},
 	}
+}
+
+type SpyAlerter struct {
+	alerts []struct {
+		scheduledAt time.Duration
+		amount      int
+	}
+}
+
+func (s *SpyAlerter) ScheduleAlertAfter(duration time.Duration, amount int) {
+	s.alerts = append(s.alerts, struct {
+		scheduledAt time.Duration
+		amount      int
+	}{
+		duration, amount,
+	})
 }

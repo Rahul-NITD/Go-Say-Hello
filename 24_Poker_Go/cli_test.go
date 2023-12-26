@@ -11,14 +11,14 @@ func TestCLI(t *testing.T) {
 	t.Run("Test for Chris", func(t *testing.T) {
 		inp := strings.NewReader("Chris wins\n")
 		store := NewSTUBStorage()
-		cli := &poker.CLI{Store: &store, Inp: inp}
+		cli := poker.NewCLI(&store, inp, nil)
 		cli.PlayPoker()
 		assertPlayerWin(t, &store, "Chris", 1)
 	})
 	t.Run("Test for Adam", func(t *testing.T) {
 		inp := strings.NewReader("Adam wins\n")
 		store := NewSTUBStorage()
-		cli := &poker.CLI{Store: &store, Inp: inp}
+		cli := poker.NewCLI(&store, inp, nil)
 		cli.PlayPoker()
 		assertPlayerWin(t, &store, "Adam", 1)
 	})
