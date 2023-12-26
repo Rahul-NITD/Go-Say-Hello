@@ -9,19 +9,28 @@ import (
 )
 
 func TestCLI(t *testing.T) {
-	inp := strings.NewReader("Chris wins\n")
-	store := poker.NewInMemoryStorage()
-	cli := &cli.CLI{Store: &store, Inp: inp}
-	cli.PlayPoker()
-	assertPlayerWin(t, &store, "Chris", 1)
+	t.Run("Test for Chris", func(t *testing.T) {
+		inp := strings.NewReader("Chris wins\n")
+		store := poker.NewInMemoryStorage()
+		cli := &cli.CLI{Store: &store, Inp: inp}
+		cli.PlayPoker()
+		assertPlayerWin(t, &store, "Chris", 1)
+	})
+	t.Run("Test for Adam", func(t *testing.T) {
+		inp := strings.NewReader("Adam wins\n")
+		store := poker.NewInMemoryStorage()
+		cli := &cli.CLI{Store: &store, Inp: inp}
+		cli.PlayPoker()
+		assertPlayerWin(t, &store, "Adam", 1)
+	})
 }
 
 func assertPlayerWin(t testing.TB, store poker.PokerStorage, winner string, wantedWins int) {
 	t.Helper()
-	if sc, err := store.GetScore("Chris"); sc != 1 || err != nil {
+	if sc, err := store.GetScore(winner); sc != 1 || err != nil {
 		t.Errorf("%s score : %d\nerror : %v", winner, sc, err)
 	}
-	got, err := store.GetScore("Chris")
+	got, err := store.GetScore(winner)
 	if err != nil {
 		t.Fatalf("Error occured : %v", err)
 	}
