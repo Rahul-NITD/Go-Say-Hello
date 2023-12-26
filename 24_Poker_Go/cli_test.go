@@ -1,25 +1,24 @@
-package cli_test
+package poker_test
 
 import (
 	"strings"
 	"testing"
 
 	poker "github.com/Rahul-NITD/Poker"
-	"github.com/Rahul-NITD/Poker/cmd/cli"
 )
 
 func TestCLI(t *testing.T) {
 	t.Run("Test for Chris", func(t *testing.T) {
 		inp := strings.NewReader("Chris wins\n")
-		store := poker.NewInMemoryStorage()
-		cli := &cli.CLI{Store: &store, Inp: inp}
+		store := NewSTUBStorage()
+		cli := &poker.CLI{Store: &store, Inp: inp}
 		cli.PlayPoker()
 		assertPlayerWin(t, &store, "Chris", 1)
 	})
 	t.Run("Test for Adam", func(t *testing.T) {
 		inp := strings.NewReader("Adam wins\n")
-		store := poker.NewInMemoryStorage()
-		cli := &cli.CLI{Store: &store, Inp: inp}
+		store := NewSTUBStorage()
+		cli := &poker.CLI{Store: &store, Inp: inp}
 		cli.PlayPoker()
 		assertPlayerWin(t, &store, "Adam", 1)
 	})
