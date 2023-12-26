@@ -16,8 +16,8 @@ func TestBlindAlerter(t *testing.T) {
 		out := &bytes.Buffer{}
 		store := NewSTUBStorage()
 		alerter := SpyAlerter{}
-
-		cli := poker.NewCLI(&store, inp, &alerter, out)
+		game := poker.NewGame(&alerter, &store)
+		cli := poker.NewCLI(inp, out, game)
 		cli.PlayPoker()
 
 		cases := GenerateCases()
@@ -28,8 +28,8 @@ func TestBlindAlerter(t *testing.T) {
 		out := &bytes.Buffer{}
 		store := NewSTUBStorage()
 		alerter := SpyAlerter{}
-
-		cli := poker.NewCLI(&store, inp, &alerter, out)
+		game := poker.NewGame(&alerter, &store)
+		cli := poker.NewCLI(inp, out, game)
 		cli.PlayPoker()
 
 		got := out.String()

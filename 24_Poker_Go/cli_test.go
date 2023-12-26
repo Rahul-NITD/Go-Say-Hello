@@ -12,14 +12,16 @@ func TestCLI(t *testing.T) {
 	t.Run("Test for Chris", func(t *testing.T) {
 		inp := strings.NewReader("5\nChris wins\n")
 		store := NewSTUBStorage()
-		cli := poker.NewCLI(&store, inp, nil, nil)
+		game := poker.NewGame(nil, &store)
+		cli := poker.NewCLI(inp, nil, game)
 		cli.PlayPoker()
 		assertPlayerWin(t, &store, "Chris", 1)
 	})
 	t.Run("Test for Adam", func(t *testing.T) {
 		inp := strings.NewReader("5\nAdam wins\n")
 		store := NewSTUBStorage()
-		cli := poker.NewCLI(&store, inp, nil, nil)
+		game := poker.NewGame(nil, &store)
+		cli := poker.NewCLI(inp, nil, game)
 		cli.PlayPoker()
 		assertPlayerWin(t, &store, "Adam", 1)
 	})
@@ -29,8 +31,8 @@ func TestCLI(t *testing.T) {
 		out := &bytes.Buffer{}
 		store := NewSTUBStorage()
 		alerter := SpyAlerter{}
-
-		cli := poker.NewCLI(&store, inp, &alerter, out)
+		game := poker.NewGame(&alerter, &store)
+		cli := poker.NewCLI(inp, out, game)
 		cli.PlayPoker()
 
 		got := out.String()

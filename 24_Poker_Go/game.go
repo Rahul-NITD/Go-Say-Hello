@@ -10,6 +10,13 @@ type Game struct {
 	store   PokerStorage
 }
 
+func NewGame(alerter BlindAlerter, store PokerStorage) Game {
+	return Game{
+		alerter: alerter,
+		store:   store,
+	}
+}
+
 func (g *Game) Start(numberOfPlayers int) {
 	if g.alerter != nil {
 		blindIncrement := time.Duration(5+numberOfPlayers) * time.Minute

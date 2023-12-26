@@ -35,13 +35,10 @@ func (c *CLI) PlayPoker() {
 	c.game.Finish(strings.Replace(c.inp.Text(), " wins", "", 1))
 }
 
-func NewCLI(store PokerStorage, inp io.Reader, alerter BlindAlerter, out io.Writer) *CLI {
+func NewCLI(inp io.Reader, out io.Writer, game Game) *CLI {
 	return &CLI{
-		inp: bufio.NewScanner(inp),
-		out: out,
-		game: Game{
-			alerter: alerter,
-			store:   store,
-		},
+		inp:  bufio.NewScanner(inp),
+		out:  out,
+		game: game,
 	}
 }
