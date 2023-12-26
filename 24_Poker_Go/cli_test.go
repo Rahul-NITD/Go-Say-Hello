@@ -90,8 +90,7 @@ func assertPlayerWin(t testing.TB, store poker.PokerStorage, winner string, want
 	if err != nil {
 		t.Fatalf("Error occured : %v", err)
 	}
-	want := wantedWins
-	if got != want {
-		t.Errorf("Did not record correct wins, got %d != %d", got, want)
+	if got != wantedWins {
+		t.Errorf("Did not record correct wins, got %d != %d", got, wantedWins)
 	}
 }
