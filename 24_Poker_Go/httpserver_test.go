@@ -12,7 +12,8 @@ import (
 func TestHTTPServer(t *testing.T) {
 
 	storage := NewSTUBStorage()
-	server := poker.NewServer(&storage)
+	game := NewGameSpy(&SpyAlerter{}, &storage)
+	server := poker.NewServer(&storage, game)
 
 	t.Run("Test GET route", func(t *testing.T) {
 
@@ -100,7 +101,8 @@ func TestHTTPServer(t *testing.T) {
 	})
 
 	storage = NewSTUBStorage()
-	server = poker.NewServer(&storage)
+	game = NewGameSpy(&SpyAlerter{}, &storage)
+	server = poker.NewServer(&storage, game)
 
 	t.Run("Test /league route", func(t *testing.T) {
 		res, req := CreateGetRequest("/league")
@@ -127,7 +129,8 @@ func TestHTTPServer(t *testing.T) {
 
 	t.Run("GET /game returns 200", func(t *testing.T) {
 		store := NewSTUBStorage()
-		server := poker.NewServer(&store)
+		game := NewGameSpy(&SpyAlerter{}, &store)
+		server := poker.NewServer(&store, game)
 		req, _ := http.NewRequest(http.MethodGet, "/game", nil)
 		res := httptest.NewRecorder()
 

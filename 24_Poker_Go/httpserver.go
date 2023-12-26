@@ -5,8 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/gorilla/websocket"
@@ -25,13 +27,15 @@ type Player struct {
 
 type PokerServer struct {
 	ScoreStorage PokerStorage
+	game         Game
 	http.Handler
 }
 
-func NewServer(storage PokerStorage) *PokerServer {
+func NewServer(storage PokerStorage, game Game) *PokerServer {
 	server := new(PokerServer)
 	server.ScoreStorage = storage
 	router := http.NewServeMux()
+	server.game = game
 	router.Handle("/players/", http.HandlerFunc(server.playersRouteHandler))
 	router.Handle("/league", http.HandlerFunc(server.leagueRouteHandler))
 	router.Handle("/game", http.HandlerFunc(server.gameHandler))
@@ -50,16 +54,18 @@ func (server *PokerServer) wsHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("ws connection err, %v\n", err)
 	}
-	_, _, err = conn.ReadMessage()
+	_, numberOfPlayersMsg, err := conn.ReadMessage()
 	if err != nil {
 		log.Printf("ws read err, %v\n", err)
 	}
+	numberOfPlayers, _ := strconv.Atoi(string(numberOfPlayersMsg))
+	server.game.Start(numberOfPlayers, io.Discard)
 
 	_, winMessage, err := conn.ReadMessage()
 	if err != nil {
 		log.Printf("ws read err, %v\n", err)
 	}
-	server.ScoreStorage.RecordWin(string(winMessage))
+	server.game.Finish(string(winMessage))
 }
 
 func (server *PokerServer) playersRouteHandler(w http.ResponseWriter, r *http.Request) {

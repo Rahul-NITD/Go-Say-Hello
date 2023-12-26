@@ -14,7 +14,8 @@ func TestWebsocket(t *testing.T) {
 	t.Run("receive winner over websocket", func(t *testing.T) {
 		store := NewSTUBStorage()
 		winner := "Rahul"
-		server := httptest.NewServer(poker.NewServer(&store))
+		game := poker.NewTexasHoldem(&SpyAlerter{}, &store)
+		server := httptest.NewServer(poker.NewServer(&store, game))
 		defer server.Close()
 
 		conn := DialWS(t, server)

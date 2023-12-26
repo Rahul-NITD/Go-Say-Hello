@@ -129,11 +129,13 @@ type GameSpy struct {
 	StartedWith  int
 	FinishedWith string
 	StartCalled  bool
+	store        poker.PokerStorage
 }
 
-func NewGameSpy(alerter poker.BlindAlerter, store poker.PokerStorage) GameSpy {
-	return GameSpy{
+func NewGameSpy(alerter poker.BlindAlerter, store poker.PokerStorage) *GameSpy {
+	return &GameSpy{
 		StartCalled: false,
+		store:       store,
 	}
 }
 
@@ -144,4 +146,5 @@ func (g *GameSpy) Start(numberOfPlayers int, alertDest io.Writer) {
 
 func (g *GameSpy) Finish(winner string) {
 	g.FinishedWith = winner
+	// g.store.RecordWin()
 }
