@@ -110,17 +110,16 @@ func NewSTUBStorage() STUBStorage {
 }
 
 type SpyAlerter struct {
-	alerts []struct {
-		scheduledAt time.Duration
-		amount      int
-	}
+	alerts []TestAlert
+}
+
+type TestAlert struct {
+	Time time.Duration
+	Amt  int
 }
 
 func (s *SpyAlerter) ScheduleAlertAfter(duration time.Duration, amount int) {
-	s.alerts = append(s.alerts, struct {
-		scheduledAt time.Duration
-		amount      int
-	}{
+	s.alerts = append(s.alerts, TestAlert{
 		duration, amount,
 	})
 }
