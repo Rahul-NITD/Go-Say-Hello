@@ -16,7 +16,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("DB Error, %v", err)
 	}
-	alerter := poker.BlindAlerterFunc(poker.StdOutAlerter)
+	alerter := poker.BlindAlerterFunc(poker.Alerter)
 	game := poker.NewTexasHoldem(alerter, store)
 	cli := poker.NewCLI(os.Stdin, os.Stdout, game)
 	cli.PlayPoker()

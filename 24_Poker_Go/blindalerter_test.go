@@ -2,6 +2,7 @@ package poker_test
 
 import (
 	"fmt"
+	"io"
 	"testing"
 	"time"
 
@@ -12,14 +13,14 @@ func TestBlindAlerter(t *testing.T) {
 	t.Run("Schedules printing Blind Values", func(t *testing.T) {
 		alerter := SpyAlerter{}
 		game := poker.NewTexasHoldem(&alerter, nil)
-		game.Start(5)
+		game.Start(5, io.Discard)
 		cases := GenerateCases()
 		AssertAlerts(t, cases, alerter)
 	})
 	t.Run("Test it prompts for number of users and alerts accordingly", func(t *testing.T) {
 		alerter := SpyAlerter{}
 		game := poker.NewTexasHoldem(&alerter, nil)
-		game.Start(7)
+		game.Start(7, io.Discard)
 		cases := []TestAlert{
 			{0 * time.Second, 100},
 			{12 * time.Minute, 200},

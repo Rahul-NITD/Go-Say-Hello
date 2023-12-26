@@ -36,7 +36,7 @@ func (c *CLI) PlayPoker() {
 		fmt.Fprint(c.out, CannotConvertText)
 		return
 	}
-	c.game.Start(players)
+	c.game.Start(players, c.out)
 
 	c.inp.Scan()
 	if !strings.Contains(c.inp.Text(), "wins") {

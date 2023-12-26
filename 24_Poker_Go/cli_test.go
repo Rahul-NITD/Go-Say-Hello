@@ -86,9 +86,6 @@ func TestCLI(t *testing.T) {
 
 func assertPlayerWin(t testing.TB, store poker.PokerStorage, winner string, wantedWins int) {
 	t.Helper()
-	if sc, err := store.GetScore(winner); sc != 1 || err != nil {
-		t.Errorf("%s score : %d\nerror : %v", winner, sc, err)
-	}
 	got, err := store.GetScore(winner)
 	if err != nil {
 		t.Fatalf("Error occured : %v", err)

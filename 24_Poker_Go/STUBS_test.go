@@ -1,6 +1,7 @@
 package poker_test
 
 import (
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -118,7 +119,7 @@ type TestAlert struct {
 	Amt  int
 }
 
-func (s *SpyAlerter) ScheduleAlertAfter(duration time.Duration, amount int) {
+func (s *SpyAlerter) ScheduleAlertAfter(duration time.Duration, amount int, to io.Writer) {
 	s.alerts = append(s.alerts, TestAlert{
 		duration, amount,
 	})
@@ -136,7 +137,7 @@ func NewGameSpy(alerter poker.BlindAlerter, store poker.PokerStorage) GameSpy {
 	}
 }
 
-func (g *GameSpy) Start(numberOfPlayers int) {
+func (g *GameSpy) Start(numberOfPlayers int, alertDest io.Writer) {
 	g.StartedWith = numberOfPlayers
 	g.StartCalled = true
 }
