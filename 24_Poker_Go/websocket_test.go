@@ -21,10 +21,10 @@ func TestWebsocket(t *testing.T) {
 
 		defer conn.Close()
 
+		WriteMessageWS(t, conn, "3")
 		WriteMessageWS(t, conn, winner)
 		time.Sleep(10 * time.Millisecond)
 		assertPlayerWin(t, &store, "Rahul", 3)
-
 	})
 }
 

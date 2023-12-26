@@ -50,11 +50,16 @@ func (server *PokerServer) wsHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("ws connection err, %v\n", err)
 	}
-	_, message, err := conn.ReadMessage()
+	_, _, err = conn.ReadMessage()
 	if err != nil {
 		log.Printf("ws read err, %v\n", err)
 	}
-	server.ScoreStorage.RecordWin(string(message))
+
+	_, winMessage, err := conn.ReadMessage()
+	if err != nil {
+		log.Printf("ws read err, %v\n", err)
+	}
+	server.ScoreStorage.RecordWin(string(winMessage))
 }
 
 func (server *PokerServer) playersRouteHandler(w http.ResponseWriter, r *http.Request) {
