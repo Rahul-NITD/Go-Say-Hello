@@ -127,14 +127,18 @@ func (s *SpyAlerter) ScheduleAlertAfter(duration time.Duration, amount int) {
 type GameSpy struct {
 	StartedWith  int
 	FinishedWith string
+	StartCalled  bool
 }
 
 func NewGameSpy(alerter poker.BlindAlerter, store poker.PokerStorage) GameSpy {
-	return GameSpy{}
+	return GameSpy{
+		StartCalled: false,
+	}
 }
 
 func (g *GameSpy) Start(numberOfPlayers int) {
 	g.StartedWith = numberOfPlayers
+	g.StartCalled = true
 }
 
 func (g *GameSpy) Finish(winner string) {

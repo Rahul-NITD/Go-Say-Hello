@@ -36,10 +36,31 @@ func TestCLI(t *testing.T) {
 		cli.PlayPoker()
 
 		got := out.String()
-		want := "Enter Number of Players : "
+		want := poker.NumberOfPlayersText
 
 		if got != want {
 			t.Error("Did not ask for number of players")
+		}
+
+	})
+
+	t.Run("Test Game does not start when invalid input given", func(t *testing.T) {
+		out := &bytes.Buffer{}
+		in := strings.NewReader("Pies\n")
+		game := &GameSpy{}
+
+		cli := poker.NewCLI(in, out, game)
+		cli.PlayPoker()
+
+		if game.StartCalled {
+			t.Error("Start shouldn't be called")
+		}
+
+		got := out.String()
+		want := poker.NumberOfPlayersText + poker.CannotConvertText
+
+		if got != want {
+			t.Errorf("got %q != %q", got, want)
 		}
 
 	})

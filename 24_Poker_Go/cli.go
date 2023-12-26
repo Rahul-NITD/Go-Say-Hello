@@ -15,10 +15,15 @@ type CLI struct {
 	game Game
 }
 
+const (
+	NumberOfPlayersText = "Enter Number of Players : "
+	CannotConvertText   = "Could not convert to integer. Run again"
+)
+
 func (c *CLI) PlayPoker() {
 
 	if c.out != nil {
-		fmt.Fprint(c.out, "Enter Number of Players : ")
+		fmt.Fprint(c.out, NumberOfPlayersText)
 	} else {
 		log.Println("Output channel is nil")
 	}
@@ -27,7 +32,8 @@ func (c *CLI) PlayPoker() {
 	txt := strings.TrimSuffix(c.inp.Text(), "\n")
 	players, err := strconv.Atoi(txt)
 	if err != nil {
-		log.Fatalf("Could not convert to integer. Run again %q", txt)
+		fmt.Fprint(c.out, CannotConvertText)
+		return
 	}
 	c.game.Start(players)
 
