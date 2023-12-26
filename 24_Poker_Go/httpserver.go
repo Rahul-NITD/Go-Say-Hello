@@ -30,6 +30,7 @@ func NewServer(storage PokerStorage) *PokerServer {
 	router := http.NewServeMux()
 	router.Handle("/players/", http.HandlerFunc(server.playersRouteHandler))
 	router.Handle("/league", http.HandlerFunc(server.leagueRouteHandler))
+	router.Handle("/game", http.HandlerFunc(server.gameHandler))
 	server.Handler = router
 	return server
 }
@@ -55,6 +56,10 @@ func (server *PokerServer) leagueRouteHandler(w http.ResponseWriter, r *http.Req
 	default:
 		w.WriteHeader(http.StatusBadRequest)
 	}
+}
+
+func (server *PokerServer) gameHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
 }
 
 func getLeague(w http.ResponseWriter, storage PokerStorage) {

@@ -3,6 +3,7 @@ package poker_test
 import (
 	"encoding/json"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	poker "github.com/Rahul-NITD/Poker"
@@ -122,6 +123,18 @@ func TestHTTPServer(t *testing.T) {
 		var got []poker.Player
 		json.NewDecoder(res.Body).Decode(&got)
 		AssertLeague(t, got, want)
+	})
+
+	t.Run("GET /game returns 200", func(t *testing.T) {
+		store := NewSTUBStorage()
+		server := poker.NewServer(&store)
+		req, _ := http.NewRequest(http.MethodGet, "/game", nil)
+		res := httptest.NewRecorder()
+
+		server.ServeHTTP(res, req)
+
+		AssertStatusCode(t, res.Code, 200)
+
 	})
 
 }
