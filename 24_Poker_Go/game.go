@@ -3,7 +3,6 @@ package poker
 import (
 	"io"
 	"log"
-	"os"
 	"time"
 )
 
@@ -31,7 +30,7 @@ func (g TexasHoldem) Start(numberOfPlayers int, alertDest io.Writer) {
 		blinds := []int{100, 200, 300, 400, 500, 600, 800, 1000, 2000, 4000, 8000}
 		blindTime := 0 * time.Second
 		for _, blind := range blinds {
-			g.alerter.ScheduleAlertAfter(blindTime, blind, os.Stdout)
+			g.alerter.ScheduleAlertAfter(blindTime, blind, alertDest)
 			blindTime = blindTime + blindIncrement
 		}
 	} else {

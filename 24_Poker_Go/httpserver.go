@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"io"
 	"log"
 	"net/http"
 	"strconv"
@@ -50,22 +49,42 @@ var upgrader = websocket.Upgrader{
 }
 
 func (server *PokerServer) wsHandler(w http.ResponseWriter, r *http.Request) {
+	ws := NewPlayerWSServer(w, r)
+
+	numberOfPlayersMsg := ws.WaitForMessage()
+	numberOfPlayers, _ := strconv.Atoi(numberOfPlayersMsg)
+	server.game.Start(numberOfPlayers, ws)
+
+	winner := ws.WaitForMessage()
+	server.game.Finish(winner)
+}
+
+type playerServerWS struct {
+	*websocket.Conn
+}
+
+func (ws *playerServerWS) Write(p []byte) (n int, err error) {
+	err = ws.WriteMessage(websocket.TextMessage, p)
+	if err != nil {
+		return 0, err
+	}
+	return len(p), nil
+}
+
+func NewPlayerWSServer(w http.ResponseWriter, r *http.Request) *playerServerWS {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Printf("ws connection err, %v\n", err)
 	}
-	_, numberOfPlayersMsg, err := conn.ReadMessage()
-	if err != nil {
-		log.Printf("ws read err, %v\n", err)
-	}
-	numberOfPlayers, _ := strconv.Atoi(string(numberOfPlayersMsg))
-	server.game.Start(numberOfPlayers, io.Discard)
+	return &playerServerWS{conn}
+}
 
-	_, winMessage, err := conn.ReadMessage()
+func (p *playerServerWS) WaitForMessage() string {
+	_, msg, err := p.ReadMessage()
 	if err != nil {
 		log.Printf("ws read err, %v\n", err)
 	}
-	server.game.Finish(string(winMessage))
+	return string(msg)
 }
 
 func (server *PokerServer) playersRouteHandler(w http.ResponseWriter, r *http.Request) {
