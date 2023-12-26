@@ -123,3 +123,20 @@ func (s *SpyAlerter) ScheduleAlertAfter(duration time.Duration, amount int) {
 		duration, amount,
 	})
 }
+
+type GameSpy struct {
+	StartedWith  int
+	FinishedWith string
+}
+
+func NewGameSpy(alerter poker.BlindAlerter, store poker.PokerStorage) GameSpy {
+	return GameSpy{}
+}
+
+func (g *GameSpy) Start(numberOfPlayers int) {
+	g.StartedWith = numberOfPlayers
+}
+
+func (g *GameSpy) Finish(winner string) {
+	g.FinishedWith = winner
+}

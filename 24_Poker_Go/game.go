@@ -5,19 +5,24 @@ import (
 	"time"
 )
 
-type Game struct {
+type TexasHoldem struct {
 	alerter BlindAlerter
 	store   PokerStorage
 }
 
-func NewGame(alerter BlindAlerter, store PokerStorage) Game {
-	return Game{
+type Game interface {
+	Start(numberOfPlayers int)
+	Finish(winner string)
+}
+
+func NewTexasHoldem(alerter BlindAlerter, store PokerStorage) TexasHoldem {
+	return TexasHoldem{
 		alerter: alerter,
 		store:   store,
 	}
 }
 
-func (g *Game) Start(numberOfPlayers int) {
+func (g TexasHoldem) Start(numberOfPlayers int) {
 	if g.alerter != nil {
 		blindIncrement := time.Duration(5+numberOfPlayers) * time.Minute
 
@@ -32,6 +37,6 @@ func (g *Game) Start(numberOfPlayers int) {
 	}
 }
 
-func (g *Game) Finish(winner string) {
+func (g TexasHoldem) Finish(winner string) {
 	g.store.RecordWin(winner)
 }
