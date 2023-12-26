@@ -4,8 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"html/template"
+	"log"
 	"net/http"
 	"strings"
+
+	"github.com/gorilla/websocket"
 )
 
 type PokerStorage interface {
@@ -31,8 +35,25 @@ func NewServer(storage PokerStorage) *PokerServer {
 	router.Handle("/players/", http.HandlerFunc(server.playersRouteHandler))
 	router.Handle("/league", http.HandlerFunc(server.leagueRouteHandler))
 	router.Handle("/game", http.HandlerFunc(server.gameHandler))
+	router.Handle("/ws", http.HandlerFunc(server.wsHandler))
 	server.Handler = router
 	return server
+}
+
+func (server *PokerServer) wsHandler(w http.ResponseWriter, r *http.Request) {
+	upgrader := websocket.Upgrader{
+		ReadBufferSize:  1024,
+		WriteBufferSize: 1024,
+	}
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Printf("ws connection err, %v\n", err)
+	}
+	_, message, err := conn.ReadMessage()
+	if err != nil {
+		log.Printf("ws read err, %v\n", err)
+	}
+	server.ScoreStorage.RecordWin(string(message))
 }
 
 func (server *PokerServer) playersRouteHandler(w http.ResponseWriter, r *http.Request) {
@@ -59,7 +80,14 @@ func (server *PokerServer) leagueRouteHandler(w http.ResponseWriter, r *http.Req
 }
 
 func (server *PokerServer) gameHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
+	tmpl, err := template.ParseFiles("game.html")
+
+	if err != nil {
+		http.Error(w, fmt.Sprintf("problem loading template %s", err.Error()), http.StatusInternalServerError)
+		return
+	}
+
+	tmpl.Execute(w, nil)
 }
 
 func getLeague(w http.ResponseWriter, storage PokerStorage) {
