@@ -1,6 +1,7 @@
 package cli_test
 
 import (
+	"strings"
 	"testing"
 
 	poker "github.com/Rahul-NITD/Poker"
@@ -8,10 +9,24 @@ import (
 )
 
 func TestCLI(t *testing.T) {
+	inp := strings.NewReader("Chris wins\n")
 	store := poker.NewInMemoryStorage()
-	cli := &cli.CLI{Store: &store}
+	cli := &cli.CLI{Store: &store, Inp: inp}
 	cli.PlayPoker()
-	if sc, err := store.GetScore("Adam"); sc != 1 || err != nil {
-		t.Errorf("Adam score : %d\nerror : %v", sc, err)
+	assertPlayerWin(t, &store, "Chris", 1)
+}
+
+func assertPlayerWin(t testing.TB, store poker.PokerStorage, winner string, wantedWins int) {
+	t.Helper()
+	if sc, err := store.GetScore("Chris"); sc != 1 || err != nil {
+		t.Errorf("%s score : %d\nerror : %v", winner, sc, err)
+	}
+	got, err := store.GetScore("Chris")
+	if err != nil {
+		t.Fatalf("Error occured : %v", err)
+	}
+	want := wantedWins
+	if got != want {
+		t.Errorf("Did not record correct wins, got %d != %d", got, want)
 	}
 }
