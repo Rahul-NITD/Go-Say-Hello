@@ -11,6 +11,7 @@ func main() {
 	fmt.Println("Let's Play Poker")
 	fmt.Println("Type '{Name} wins' to record a win")
 	store := poker.NewInMemoryStorage()
-	cli := poker.NewCLI(&store, os.Stdin, nil)
+	alerter := poker.BlindAlerterFunc(poker.StdOutAlerter)
+	cli := poker.NewCLI(&store, os.Stdin, alerter, nil)
 	cli.PlayPoker()
 }

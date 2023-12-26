@@ -1,6 +1,7 @@
 package poker_test
 
 import (
+	"bytes"
 	"fmt"
 	"strings"
 	"testing"
@@ -11,14 +12,40 @@ import (
 
 func TestBlindAlerter(t *testing.T) {
 	t.Run("Schedules printing Blind Values", func(t *testing.T) {
-		inp := strings.NewReader("Chris wins\n")
+		inp := strings.NewReader("5\n")
+		out := &bytes.Buffer{}
 		store := NewSTUBStorage()
 		alerter := SpyAlerter{}
 
-		cli := poker.NewCLI(&store, inp, &alerter)
+		cli := poker.NewCLI(&store, inp, &alerter, out)
 		cli.PlayPoker()
 
 		cases := GenerateCases()
+		AssertAlerts(t, cases, alerter)
+	})
+	t.Run("Test it prompts for number of users and alerts accordingly", func(t *testing.T) {
+		inp := strings.NewReader("7\n")
+		out := &bytes.Buffer{}
+		store := NewSTUBStorage()
+		alerter := SpyAlerter{}
+
+		cli := poker.NewCLI(&store, inp, &alerter, out)
+		cli.PlayPoker()
+
+		got := out.String()
+		want := "Enter Number of Players : "
+
+		if got != want {
+			t.Error("Did not ask for number of players")
+		}
+
+		cases := []TestAlert{
+			{0 * time.Second, 100},
+			{12 * time.Minute, 200},
+			{24 * time.Minute, 300},
+			{36 * time.Minute, 400},
+		}
+
 		AssertAlerts(t, cases, alerter)
 
 	})
